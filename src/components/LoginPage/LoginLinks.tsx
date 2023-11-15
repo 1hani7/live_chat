@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function LoginLinks() {
     return (
         <div className="text-secondary text-center mt-5">
-            <Link to='/sign'
+            <Link to='/Sign'
             className='form-text text-decoration-none'>
                 회원가입
             </Link>
