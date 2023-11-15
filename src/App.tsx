@@ -5,11 +5,11 @@ import Spinner from 'react-bootstrap/Spinner';
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 const SignPage = React.lazy(() => import('./pages/SignPage'));
 const PwSearch = React.lazy(() => import('./pages/PwSearch'));
-
+const MainPage = React.lazy(() => import('./pages/MainPage'));
 
 function App() {
   const Public = process.env.PUBLIC_URL;
-  
+
   return (
     <div className="App
       d-flex justify-content-center align-items-center"
@@ -31,6 +31,7 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/Sign" element={<SignPage />} />
           <Route path="/pwSearch" element={<PwSearch />} />
+          <Route path="/MainPage" element={<MainPage />} />
         </Routes>
       </Suspense>
     </div>

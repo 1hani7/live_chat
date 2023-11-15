@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function LoginInputs() {
+    const nav = useNavigate();
     return (
         <div className="d-flex flex-column row-gap-3 px-lg-5"> 
              {/* 아이디 비번 입력창 */}
@@ -23,11 +25,13 @@ export default function LoginInputs() {
             </div>
             <div className='btn-group' role='group'>
                 {/* 가입한 계정으로 */}
-                <button className='btn btn-primary fw-bold'>
+                <button className='btn btn-primary fw-bold'
+                onClick={() => nav('/MainPage')}>
                     LOGIN
                 </button>
                 {/* 게스트 계정으로 */}
-                <button className='btn btn-outline-secondary fw-bold'>
+                <button className='btn btn-outline-secondary fw-bold'
+                onClick={() => nav('/MainPage')}>
                     게스트
                 </button>
             </div>
