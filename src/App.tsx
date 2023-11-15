@@ -9,6 +9,7 @@ const PwSearch = React.lazy(() => import('./pages/PwSearch'));
 
 function App() {
   const Public = process.env.PUBLIC_URL;
+  
   return (
     <div className="App
       d-flex justify-content-center align-items-center"
