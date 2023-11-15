@@ -1,4 +1,6 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import PwSearchInputs from '../components/PwSearchPage/PwSearchInputs';
 import LogoImage from '../components/LoginPage/LogoImage';
 

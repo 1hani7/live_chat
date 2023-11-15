@@ -1,5 +1,7 @@
 import React from 'react';
 import '../PageChange.css'
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import SignImage from '../components/SignPage/SignImage';
 import SignInputs from '../components/SignPage/SignInputs';
 import LogoImage from '../components/LoginPage/LogoImage';

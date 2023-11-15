@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App
-      d-flex justify-content-center align-items-center"
+      d-flex justify-content-center align-items-center p-0"
       style={{
         width: '100%', height: '100vh',
         backgroundImage: `url(${Public}/images/Background.jpg)`,
@@ -22,7 +22,7 @@ function App() {
       }}>
 
       <Suspense fallback={
-        <Spinner animation="border" role="status">
+        <Spinner className='text-light' animation="border" role="status">
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       }>
