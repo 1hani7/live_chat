@@ -1,24 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Suspense } from 'react';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
+
+const LoginPage = React.lazy(() => import('./pages/LoginPage'));
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Suspense fallback={
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      }>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
