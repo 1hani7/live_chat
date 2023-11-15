@@ -11,11 +11,6 @@ export default function LoginLinks() {
                 회원가입
             </Link>
             &nbsp;|&nbsp;
-            <Link to='/idSearch'
-            className='form-text text-decoration-none'>
-                아이디 찾기
-            </Link>
-            &nbsp;|&nbsp;
             <Link to='/pwSearch'
             className='form-text text-decoration-none'>
                 비밀번호 찾기

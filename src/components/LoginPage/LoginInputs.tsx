@@ -6,10 +6,12 @@ export default function LoginInputs() {
     return (
         <div className="d-flex flex-column row-gap-3 px-lg-5"> 
              {/* 아이디 비번 입력창 */}
-            <input type="text" name='id' placeholder='User Name' autoComplete='off'
-                className='form-control border-bottom' />
-            <input type="text" name='pw' placeholder='Password' autoComplete='off'
-                className='form-control border-bottom' />
+            <form>
+                <input type="email" name='email' placeholder='Email' autoComplete='off'
+                    className='form-control border-bottom mb-3' />
+                <input type="password" name='pw' placeholder='Password' autoComplete='off'
+                    className='form-control border-bottom mb-3' />
+            </form>
             <div>
                 {/* 자동 로그인 활성화 */}
                 <input type="checkbox"

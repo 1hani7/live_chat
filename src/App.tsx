@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
-import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 const SignPage = React.lazy(() => import('./pages/SignPage'));
+const PwSearch = React.lazy(() => import('./pages/PwSearch'));
 
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/Sign" element={<SignPage />} />
+          <Route path="/pwSearch" element={<PwSearch />} />
         </Routes>
       </Suspense>
     </div>
