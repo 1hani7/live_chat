@@ -17,7 +17,7 @@ export default function NavMenus() {
         <div className="my-3">
             {
                 dt.map((item, idx) => (
-                    <button onClick={() => nav(`${item.path}`)}
+                    <button onClick={() => nav(`${item.path}`)} key={idx}
                         className='
                         btn btn-primary w-100 text-start rounded-0 py-3 ps-4'>
                         <i className={`bi ${item.icon} pe-3`}></i>
