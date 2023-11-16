@@ -7,6 +7,12 @@ const SignPage = React.lazy(() => import('./pages/SignPage'));
 const PwSearch = React.lazy(() => import('./pages/PwSearch'));
 const MainPage = React.lazy(() => import('./pages/MainPage'));
 
+const Home = React.lazy(() => import('./components/MainPage/Contents/Home/Home'));
+const Chat = React.lazy(() => import('./components/MainPage/Contents/Chat/Chat'));
+const Friends = React.lazy(() => import('./components/MainPage/Contents/Friends/Friends'));
+const Notification = React.lazy(() => import('./components/MainPage/Contents/Notification/Notification'));
+
+
 function App() {
   const Public = process.env.PUBLIC_URL;
 
@@ -31,7 +37,12 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/Sign" element={<SignPage />} />
           <Route path="/pwSearch" element={<PwSearch />} />
-          <Route path="/MainPage" element={<MainPage />} />
+          <Route path="/MainPage" element={<MainPage />}>
+            <Route path="Home" element={<Home />} />
+            <Route path="Chat" element={<Chat />} />
+            <Route path="Friends" element={<Friends />} />
+            <Route path="Notification" element={<Notification />} />
+          </Route>
         </Routes>
       </Suspense>
     </div>

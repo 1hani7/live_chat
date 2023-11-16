@@ -26,12 +26,12 @@ export default function LoginInputs() {
             <div className='btn-group' role='group'>
                 {/* 가입한 계정으로 */}
                 <button className='btn btn-primary fw-bold'
-                onClick={() => nav('/MainPage')}>
+                onClick={() => nav('/MainPage/Chat')}>
                     LOGIN
                 </button>
                 {/* 게스트 계정으로 */}
                 <button className='btn btn-outline-secondary fw-bold'
-                onClick={() => nav('/MainPage')}>
+                onClick={() => nav('/MainPage/Chat')}>
                     게스트
                 </button>
             </div>
