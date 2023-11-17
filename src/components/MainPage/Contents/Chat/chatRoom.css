@@ -1,0 +1,9 @@
+.heightControl{
+    height: 100%;
+}
+
+@media(max-width:1200px){
+    .heightControl{
+        height: 75%;
+    }
+}

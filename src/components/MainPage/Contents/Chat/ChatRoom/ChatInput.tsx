@@ -3,7 +3,8 @@ export default function ChatInput() {
         <div className="w-100
         input-group"
         style={{ height: '60px' }}>
-            <textarea className="form-control d-flex align-items-center h-100 pt-3"
+            <textarea className="form-control d-flex align-items-center
+            h-100 pt-3"
             name="chatWrite" id="chatWrite"
             style={{ resize: 'none' }}>
             </textarea>

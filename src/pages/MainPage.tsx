@@ -7,8 +7,7 @@ import Contents from '../components/MainPage/Contents/Contents';
 
 export default function MainPage() {
     return (
-        <div className="fadeIn container-fluid p-0 d-flex" // 틀
-            style={{ width: '100%', height: '100vh' }}>
+        <div className="fadeIn container-fluid p-0 d-flex w-100 vh-100">
             <div>
                 <SideNav />
                 <SubSideNav />

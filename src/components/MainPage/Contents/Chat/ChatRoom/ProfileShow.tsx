@@ -14,7 +14,7 @@ export default function ProfileShow() {
     ]
 
     return (
-        <div className="d-flex align-items-center shadow-sm px-4 py-2 rounded">
+        <div className="d-flex align-items-center shadow-sm px-3 py-2 rounded">
             {
                 temp.map((item, idx) => (
                     <div className='d-flex w-100' key={idx}>

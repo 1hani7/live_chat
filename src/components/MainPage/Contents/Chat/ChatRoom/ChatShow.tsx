@@ -67,7 +67,7 @@ export default function ChatShow(){
     ]
 
     return(
-        <div className="overflow-scroll pe-3 shadow-sm rounded">
+        <div className="overflow-scroll px-3 shadow-sm rounded">
             {
                 temp.map((item, idx) => (
                     <div className={
@@ -78,19 +78,19 @@ export default function ChatShow(){
                         style={{width:'50px', height:'50px'}}>
 
                         </div>
-                        <p className={
+                        <div className={
                             `shadow-sm rounded p-3 w-75 m-0
                             d-flex flex-column
                             ${item.isUser === true ? 'me-3' : 'ms-3'}`
-                        }>
-                            <p className="p-0">{item.comments}</p>
+                            }>
+                            <div className="p-0">{item.comments}</div>
                             <small className={
-                                `p-0 text-secondary
+                                `p-0 mt-1 text-secondary
                                 ${item.isUser === true ? `ms-auto` : `me-auto`}`
                             }>
                                 {item.time}
                             </small>
-                        </p>
+                        </div>
                     </div>
                 ))
             }
