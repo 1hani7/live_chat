@@ -1,0 +1,9 @@
+.profile {
+    width: 50%;
+}
+
+.profile:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}

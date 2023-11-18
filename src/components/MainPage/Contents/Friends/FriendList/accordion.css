@@ -1,0 +1,9 @@
+.accordion-button::after {
+    background-image: initial;
+    display: none;
+  }
+  
+  .accordion-button:not(.collapsed)::after {
+    background-image: initial;
+    display: none;
+  }

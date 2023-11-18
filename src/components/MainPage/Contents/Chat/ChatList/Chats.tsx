@@ -126,7 +126,7 @@ export default function Chats() {
             {
                 temp.map((item, idx) => (
                     <button className="btn btn-outline-light shadow-sm w-100 py-2 mb-xl-2
-                    me-2 me-xl-0 d-flex align-items-center column-gap-3"
+                    me-2 me-xl-0 d-flex align-items-center column-gap-3 border"
                     onWheel={scrollHorizontal}
                     key={idx}>
                         <div className="rounded-circle bg-primary"

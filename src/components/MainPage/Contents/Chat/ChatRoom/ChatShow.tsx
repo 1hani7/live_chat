@@ -1,4 +1,6 @@
-export default function ChatShow(){
+import React, { useState, useEffect, useRef } from 'react';
+
+const ChatShow: React.FC = () => {
 
     const temp = [
         {
@@ -66,8 +68,16 @@ export default function ChatShow(){
         }
     ]
 
-    return(
-        <div className="overflow-scroll px-3 shadow-sm rounded">
+    const scrollTg = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        if (scrollTg.current) {
+            scrollTg.current.scrollTop = scrollTg.current.scrollHeight;
+          }
+    }, [])
+
+    return (
+        <div className="scrollToBottom overflow-scroll px-3 shadow-sm rounded"
+        ref={scrollTg}>
             {
                 temp.map((item, idx) => (
                     <div className={
@@ -75,14 +85,14 @@ export default function ChatShow(){
                         ${item.isUser === true ? 'flex-row-reverse' : ''}`
                     } key={idx}>
                         <div className="flex-shrink-0 rounded-circle bg-primary"
-                        style={{width:'50px', height:'50px'}}>
+                            style={{ width: '50px', height: '50px' }}>
 
                         </div>
                         <div className={
                             `shadow-sm rounded p-3 w-75 m-0
                             d-flex flex-column
                             ${item.isUser === true ? 'me-3' : 'ms-3'}`
-                            }>
+                        }>
                             <div className="p-0">{item.comments}</div>
                             <small className={
                                 `p-0 mt-1 text-secondary
@@ -97,3 +107,5 @@ export default function ChatShow(){
         </div>
     )
 }
+
+export default ChatShow;

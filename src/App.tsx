@@ -9,6 +9,7 @@ const MainPage = React.lazy(() => import('./pages/MainPage'));
 
 const Chat = React.lazy(() => import('./components/MainPage/Contents/Chat/Chat'));
 const Friends = React.lazy(() => import('./components/MainPage/Contents/Friends/Friends'));
+const ProfileSetting = React.lazy(() => import('./components/MainPage/Contents/ProfileSetting/ProfileSetting'))
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/MainPage//*" element={<MainPage />}>
             <Route path="Chat" element={<Chat />} />
             <Route path="Friends" element={<Friends />} />
+            <Route path="ProfileSetting" element={<ProfileSetting />} />
           </Route>
         </Routes>
       </Suspense>

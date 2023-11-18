@@ -20,7 +20,7 @@ export default function ChatList() {
                 <h3 className="fw-bolder text-body">Chat</h3>
                 <DropDown />
             </div>
-            <div className="overflow-scroll mt-xl-3
+            <div className="overflow-scroll mt-xl-2
             pe-3 pb-2 mb-2 mb-xl-0"
                 onWheel={scrollHorizontal}
             >
