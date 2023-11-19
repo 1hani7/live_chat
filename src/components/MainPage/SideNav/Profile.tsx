@@ -6,7 +6,7 @@ export default function Profile(){
     const nav = useNavigate();
     return(
         <button className="btn px-4 d-flex column-gap-3
-        align-items-center"
+        align-items-center" style={{border:'none'}}
         onClick={() => nav('/MainPage/ProfileSetting')}>
             <div className='rounded-circle overflow-hidden bg-white'
             style={{
