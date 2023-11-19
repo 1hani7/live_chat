@@ -9,6 +9,7 @@ export default function ExtraMenus(){
             <a className='btn text-white text-decoration-none p-0
             d-flex align-items-center'
             onClick={() => {
+                window.sessionStorage.setItem('uid', '');
                 nav('/');
             }}>
                 <i className="bi bi-door-open me-2 fs-4"></i>

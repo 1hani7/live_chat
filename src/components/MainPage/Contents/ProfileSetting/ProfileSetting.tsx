@@ -3,6 +3,7 @@ import ProfileMsg from "./ProfileMsg";
 import ProfileNameInfo from "./ProfileNameInfo";
 import ProfileName from "./ProfileName";
 import ProfilePassword from "./ProfilePassword";
+import ProfileDel from "./ProfileDel"
 function ProfileSetting() {
     return (
         <div className="w-100 h-100 bg-white rounded
@@ -20,6 +21,7 @@ function ProfileSetting() {
                     <ProfileMsg />
                     <ProfileName />
                     <ProfilePassword />
+                    <ProfileDel />
                 </div>
             </div>
         </div>
