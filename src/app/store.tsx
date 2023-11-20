@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import LoginStatus from '../features/LoginSlice';
+import SearchFriendSlice from '../features/SearchFriendSlice';
 
 export const store = configureStore({
     reducer: {
-        Login: LoginStatus.reducer,
+        SearchFriend: SearchFriendSlice.reducer,
     },
 })

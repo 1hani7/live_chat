@@ -1,10 +1,43 @@
+import React, { useState, useEffect } from 'react';
 import ProfileThumbnail from "./ProfileThumbnail";
 import ProfileMsg from "./ProfileMsg";
 import ProfileNameInfo from "./ProfileNameInfo";
 import ProfileName from "./ProfileName";
-import ProfilePassword from "./ProfilePassword";
+// import ProfilePassword from "./ProfilePassword";
 import ProfileDel from "./ProfileDel"
-function ProfileSetting() {
+
+import { db } from '../../../../firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
+
+const ProfileSetting:React.FC = () => {
+
+    const userId: string = sessionStorage.uid;
+
+    // 가져온 정보들 담아둘 변수
+    const [name, setName] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
+    const [initId, setInitId] = useState<string>('');
+
+    // 내 정보 가져오기
+    const settingMsg = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, 'usersDb'));
+            querySnapshot.forEach(async (document) => {
+                if (document.data().uid === userId) {
+                    setName(document.data().name);
+                    setMessage(document.data().stMsg);
+                    setInitId(document.data().userId);
+                }
+            });
+        } catch (err) {
+            alert('상태 메세지 가져오기에 실패했습니다.')
+        }
+    }
+    
+    useEffect(() => {
+        settingMsg();
+    }, []);
+
     return (
         <div className="w-100 h-100 bg-white rounded
         container-fluid h-100 px-5 py-4 overflow-scroll">
@@ -16,11 +49,11 @@ function ProfileSetting() {
                     <div className="d-flex flex-column flex-md-row align-items-center
                     column-gap-md-3 text-center text-md-start border p-3 rounded">
                         <ProfileThumbnail />
-                        <ProfileNameInfo />
+                        <ProfileNameInfo name={name} initId={initId} />
                     </div>
-                    <ProfileMsg />
-                    <ProfileName />
-                    <ProfilePassword />
+                    <ProfileMsg message={message} />
+                    <ProfileName name={name} />
+                    {/* <ProfilePassword /> */}
                     <ProfileDel />
                 </div>
             </div>

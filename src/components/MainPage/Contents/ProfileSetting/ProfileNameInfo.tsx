@@ -1,8 +1,15 @@
-function ProfileNameInfo() {
+import React, { useEffect } from 'react';
+
+type info = {
+    name: string;
+    initId: string;
+}
+
+const ProfileNameInfo = ({name, initId}:info) => {
     return (  
         <div>
-            <h4 className="fw-semibold">UserName</h4>
-            <h6 className="text-secondary">@name</h6>
+            <h4 className="fw-semibold">{name}</h4>
+            <h6 className="text-secondary">{initId}</h6>
         </div>
     );
 }

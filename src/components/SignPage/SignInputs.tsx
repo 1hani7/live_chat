@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { db, firebaseAuth, createUserWithEmailAndPassword } from '../../firebaseConfig';
 import { FirebaseError } from 'firebase/app';
-import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 const SignInputs: React.FC = () => {
@@ -21,6 +21,10 @@ const SignInputs: React.FC = () => {
 
     // 회원가입 기능
     const register = async () => {
+        if( pw !== pwCheck ) {
+            alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+            return;
+        }
         if (name !== '' && email !== '' && pw !== '' && pwCheck !== '') {
             try {
                 const createdUser = await createUserWithEmailAndPassword(firebaseAuth, email, pw);
@@ -28,10 +32,11 @@ const SignInputs: React.FC = () => {
                 await setDoc(doc(db,'usersDb', userId) ,{
                     email: email,
                     name: name,
-                    userId: '@' + name+ '-' + Math.floor(Math.random()*1000)+1 ,
+                    userId: '@' + name.split(' ')[0] + '-' + Math.floor(Math.random()*1000)+1 ,
                     online: false,
                     stMsg: '',
                     uid: userId,
+                    friends: [],
                 })
                 // console.log('문서 추가 성공', userId);
                 nav(-1);
@@ -52,8 +57,6 @@ const SignInputs: React.FC = () => {
                     console.error(err);
                 }
             }
-        }else if( pw !== pwCheck ){
-            alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
         }else {
             alert("모든 항목을 입력하셔야 합니다.")
         }

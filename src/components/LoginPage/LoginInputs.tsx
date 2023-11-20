@@ -1,7 +1,8 @@
 // 로그인 Input 기능
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { firebaseAuth, signInWithEmailAndPassword } from '../../firebaseConfig';
+import { db, firebaseAuth, signInWithEmailAndPassword } from '../../firebaseConfig';
+import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,12 +12,12 @@ const LoginInputs: React.FC = () => {
     const [pw, setPw] = useState<string>('');
     const [isChecked, setChecked] = useState<boolean>(false);
 
-    const localEmail:string | null | undefined = localStorage.getItem('email');
-    const localPw:string | null | undefined = localStorage.getItem('pw');
+    const localEmail: string | null | undefined = localStorage.getItem('email');
+    const localPw: string | null | undefined = localStorage.getItem('pw');
 
     useEffect(() => {
         // 기억된 이메일 비번 세팅
-        if( localEmail && localPw ){
+        if (localEmail && localPw) {
             setEmail(localEmail);
             setPw(localPw)
         }
@@ -24,17 +25,28 @@ const LoginInputs: React.FC = () => {
 
     // 로그인 기능
     const handleLogin = async () => {
-        if( email !== '' &&  pw !== ''){
+        if (email !== '' && pw !== '') {
             try {
                 const userInfo = await signInWithEmailAndPassword(firebaseAuth, email, pw);
-                const uid:string = userInfo.user.uid;
+                const uid: string = userInfo.user.uid;
                 window.sessionStorage.setItem('uid', uid);
+                const userId: string = sessionStorage.uid;
+                const querySnapshot = await getDocs(collection(db, 'usersDb'));
+                querySnapshot.forEach(async (document) => {
+                    // 온라인 전환
+                    if (document.data().uid === userId) {
+                        const userDocRef = doc(db, 'usersDb', document.data().uid);
+                        await updateDoc(userDocRef, {
+                            online: true,
+                        });
+                    }
+                });
 
                 // 아이디 비번 기억하기
-                if( isChecked ){
+                if (isChecked) {
                     localStorage.setItem('email', email);
                     localStorage.setItem('pw', pw);
-                }else{
+                } else {
                     localStorage.setItem('email', '');
                     localStorage.setItem('pw', '');
                 }
@@ -42,14 +54,14 @@ const LoginInputs: React.FC = () => {
             } catch (err) {
                 alert('이메일과 비밀번호가 일치하지 않거나 존재하지 않는 계정입니다.')
             }
-        }else{
+        } else {
             alert('이메일과 비밀번호를 정확히 입력해주세요.')
         }
     }
 
     // 엔터 쳐서 로그인 기능
-    const enterKey = (e:React.KeyboardEvent<HTMLInputElement>) => {
-        if( e.key === 'Enter' ) handleLogin();
+    const enterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') handleLogin();
     }
 
     return (
@@ -68,7 +80,7 @@ const LoginInputs: React.FC = () => {
             <div>
                 {/* 자동 로그인 활성화 */}
                 <input type="checkbox" className='form-check-input me-1' id='rememberMe'
-                onChange={() =>  setChecked(true)} />
+                    onChange={() => setChecked(true)} />
                 <label htmlFor="rememberMe"
                     className='form-check-label text-secondary'>
                     Remember me

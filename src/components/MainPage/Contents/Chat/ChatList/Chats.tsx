@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../scrollbar.css';
+import { db } from '../../../../../firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function Chats() {
     interface temp {
