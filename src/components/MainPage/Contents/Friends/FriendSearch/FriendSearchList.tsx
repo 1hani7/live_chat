@@ -1,56 +1,143 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import './profileShape.css'
 import { db } from '../../../../../firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { useSelector, useDispatch } from 'react-redux';
+import { reFreshToggle } from '../../../../../features/SearchFriendSlice';
 
-function FriendSearchList() {
+const FriendSearchList: React.FC = () => {
 
     interface userInfo {
         email: string | null
-        name: string | null,
+        name: string,
         online: boolean | null,
         stMsg: string | null,
         uid: string | null,
         userId: string | null
     }
 
+    // 리렌더링 분기
+    const dispatch = useDispatch();
+    const reFresh = useSelector((state: any) => state.SearchFriend.isChanged);
+
+    // 필터링 검색어
     const newFSearch = useSelector((state: any) => state.SearchFriend.newFSearch);
 
     const [temp, setTemp] = useState<userInfo[]>([]);
+    const [friends, setFriends] = useState<string[]>([]);
 
-    const userId = sessionStorage.uid;
+    const userId: string = sessionStorage.uid;
 
+
+    // 초기 가져오기
     const getUsers = async () => {
         try {
             const querySnapshot = await getDocs(collection(db, 'usersDb'));
             const t: userInfo[] = [];
-            querySnapshot.forEach((doc) => {
+            querySnapshot.forEach(async (doc) => {
                 if (doc.data().uid !== userId) {
                     const userData = doc.data() as userInfo;
                     t.push(userData);
+                    setTemp(t);
+                } else if (doc.data().uid === userId) {
+                    setFriends(doc.data().friends);
+                    // console.log(friends);
                 }
             })
-            setTemp(t);
         } catch (err) {
             console.error('읽기 오류', err);
         }
     }
-
     useEffect(() => {
         getUsers();
-    }, [])
+    }, [reFresh])
 
+
+    // 검색어 필터링
     useEffect(() => {
-        if( newFSearch !== '' ){
-            const t: userInfo[] = [...temp].filter((item:any) => {
+        if (newFSearch !== '') {
+            const t: userInfo[] = [...temp].filter((item: any) => {
                 return item.name?.indexOf(newFSearch) > -1;
             });
             setTemp(t);
-        }else{
+        } else {
             getUsers();
         }
     }, [newFSearch])
+
+
+
+    // 친구 추가 (UI변경)
+    const addFriends = (e: any) => {
+        e?.preventDefault();
+        let t = e.target;
+
+        t.classList.toggle('d-none');
+        t.nextSibling.classList.toggle('d-none');
+
+        // 데이터베이스
+        addFriendList(e);
+    }
+
+
+    // 친구 추가 (데이터베이스)
+    const addFriendList = async (e: any) => {
+        try {
+            const querySnapshot = await getDocs(collection(db, 'usersDb'));
+            querySnapshot.forEach(async (document) => {
+                if (document.data().uid === userId) {
+                    const userDocRef = doc(db, 'usersDb', document.data().uid);
+                    try {
+                        const res = await updateDoc(userDocRef, { friends: arrayUnion(e.target.value) });
+                    } catch (err) {
+                        console.error('수정실패' + err);
+                    } finally {
+                        dispatch(reFreshToggle());
+                    }
+                }
+            });
+        } catch (err) {
+            alert('친구 추가에 실패했습니다.')
+        }
+    }
+
+
+    // 친구 지우기 (UI 변경)
+    const deleteFriend = (e: any) => {
+        e?.preventDefault();
+        let t = e.target;
+
+        if (window.confirm("이 친구를 삭제하시겠습니까?")) {
+            t.classList.toggle('d-none');
+            t.previousSibling.classList.toggle('d-none');
+
+            // 데이터베이스
+            removeFriendList(e);
+        }
+    }
+
+
+    // 친구 지우기 (데이터베이스)
+    const removeFriendList = async (e: any) => {
+        try {
+            const querySnapshot = await getDocs(collection(db, 'usersDb'));
+            querySnapshot.forEach(async (document) => {
+                if (document.data().uid === userId) {
+                    const userDocRef = doc(db, 'usersDb', document.data().uid);
+                    try {
+                        const res = await updateDoc(userDocRef, { friends: arrayRemove(e.target.value) });
+                    } catch (err) {
+                        console.error('수정실패' + err);
+                    } finally {
+                        dispatch(reFreshToggle());
+                    }
+                }
+            });
+        } catch (err) {
+            alert('친구 삭제에 실패했습니다.')
+        }
+    }
+
 
     return (
         <div className="overflow-scroll w-100 pe-3 m-0 h-100
@@ -60,7 +147,7 @@ function FriendSearchList() {
                 temp.map((v, i) => (
                     <div className="btn btn-outline-light col p-2 py-3 py-sm-4 py-md-3 py-xxl-5
                     border-bottom border-right d-flex flex-column align-items-center row-gap-1 rounded-0"
-                        style={{ height: 'fit-content' }}
+                        style={{ height: 'fit-content', cursor: 'default' }}
                         key={i}>
                         <div className="bg-primary rounded-circle profile"></div>
                         <h6 className="text-body fw-bold m-0 d-flex
@@ -72,10 +159,17 @@ function FriendSearchList() {
                         </h6>
                         <small className='p-0 m-0 text-secondary'>@name</small>
                         <small className="text-center text-secondary w-100"
-                        style={{whiteSpace:'nowrap', textOverflow:'ellipsis', height:'15px'}}>{v.stMsg}</small>
+                            style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', height: '15px' }}>{v.stMsg}</small>
                         {
-                            i % 3 !== 0 ? <button className='btn btn-sm btn-outline-primary w-100 mt-2'>친구 추가</button> :
-                                <button className='btn btn-sm btn-outline-danger w-100 mt-2'>친구 삭제</button>
+                            friends.includes(v.name) ?
+                                <div className='w-100'>
+                                    <button onClick={addFriends} value={v.name} className={`d-none btn btn-sm btn-outline-primary w-100 mt-2`}>친구 추가</button>
+                                    <button onClick={deleteFriend} value={v.name} className={`btn btn-sm btn-outline-danger w-100 mt-2`}>친구 삭제</button>
+                                </div> :
+                                <div className='w-100'>
+                                    <button onClick={addFriends} value={v.name} className={`btn btn-sm btn-outline-primary w-100 mt-2`}>친구 추가</button>
+                                    <button onClick={deleteFriend} value={v.name} className={`d-none btn btn-sm btn-outline-danger w-100 mt-2`}>친구 삭제</button>
+                                </div>
                         }
                     </div>
                 ))

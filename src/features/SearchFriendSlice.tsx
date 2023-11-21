@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 interface initial{
     newFSearch: string;
     nowFSearch: string;
+    isChanged: boolean;
 }
 
 const initial:initial = {
     newFSearch: '',
     nowFSearch: '',
+    isChanged: false,
 }
 
 const SearchFriendSlice = createSlice({
@@ -19,9 +21,12 @@ const SearchFriendSlice = createSlice({
         },
         nowFSVal: (state, action) => {
             state.nowFSearch = action.payload;
+        },
+        reFreshToggle: (state) => {
+            state.isChanged = !(state.isChanged);
         }
     }
 });
 
 export default SearchFriendSlice;
-export const { newFSVal, nowFSVal } = SearchFriendSlice.actions;
+export const { newFSVal, nowFSVal, reFreshToggle, } = SearchFriendSlice.actions;
