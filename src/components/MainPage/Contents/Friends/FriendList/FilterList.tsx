@@ -26,11 +26,11 @@ const FilterList: React.FC = () => {
 
     // 리렌더링 분기
     const dispatch = useDispatch();
-    const reFresh = useSelector((state:any) => state.SearchFriend.isChanged);
-    
+    const reFresh = useSelector((state: any) => state.SearchFriend.isChanged);
+
     // 검색어 slice 변수
     const nowFSearch = useSelector((state: any) => state.SearchFriend.nowFSearch);
-    
+
 
     // 친구 목록 가져오기
     const settingFriendsListOne = async () => {
@@ -76,13 +76,12 @@ const FilterList: React.FC = () => {
 
     // 검색어로 필터링하기
     useEffect(() => {
-        console.log(nowFSearch)
-        if( nowFSearch !== '' ){
-            const t:userInfo[] = [...temp].filter((v:any) => {
+        if (nowFSearch !== '') {
+            const t: userInfo[] = [...temp].filter((v: any) => {
                 return v.name?.indexOf(nowFSearch) > -1;
             })
             setTemp(t);
-        }else{
+        } else {
             setTemp(reTemp);
         }
     }, [nowFSearch])
@@ -94,12 +93,12 @@ const FilterList: React.FC = () => {
         e?.preventDefault();
         let t = e.target.value;
 
-        if( window.confirm("이 친구를 삭제하시겠습니까?") ){
-            const tmp:userInfo[] = [...temp].filter((v:any) => {
+        if (window.confirm("이 친구를 삭제하시겠습니까?")) {
+            const tmp: userInfo[] = [...temp].filter((v: any) => {
                 return v.name?.indexOf(t) === -1;
             })
             setTemp(tmp);
-    
+
             // 데이터베이스
             removeFriendList(e);
         }
@@ -138,8 +137,13 @@ const FilterList: React.FC = () => {
                                     data-bs-toggle='collapse' data-bs-target={`#collapse-${i}`}
                                     aria-expanded='false' aria-controls={`collapse-${i}`}
                                     style={{ border: 'none', boxShadow: 'none' }}>
-                                    <div className="flex-shrink-0 bg-secondary rounded-circle"
-                                        style={{ width: '45px', height: '45px' }}></div>
+                                    <div className="flex-shrink-0 bg-primary rounded-circle
+                                    d-flex align-items-center justify-content-center"
+                                        style={{ width: '45px', height: '45px' }}>
+                                        <h3 className='position-absolute p-0 m-0 text-white'>
+                                            {v.name.split('')[0]}
+                                        </h3>
+                                    </div>
                                     <div className="d-flex flex-column text-body fw-bold ps-3">
                                         <p className="m-0 text-start">{v.name}</p>
                                         <small className="m-0 w-100 text-start text-secondary fw-normal">
@@ -158,7 +162,7 @@ const FilterList: React.FC = () => {
                                 <div className='accordion-body btn-group w-100 rows'>
                                     <button className="btn btn-primary col-9">1:1 채팅하기</button>
                                     <button className="btn btn-outline-danger" value={v.name}
-                                    onClick={deleteFriend}>삭제</button>
+                                        onClick={deleteFriend}>삭제</button>
                                 </div>
                             </div>
                         </div>

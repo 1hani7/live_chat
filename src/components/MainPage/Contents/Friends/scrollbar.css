@@ -1,5 +1,5 @@
 ::-webkit-scrollbar{
-    background: white;
+    background: rgb(255, 255, 255);
     border-radius: 20px;
     width:8px; height: 8px;
 }

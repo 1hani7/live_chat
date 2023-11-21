@@ -140,8 +140,8 @@ const FriendSearchList: React.FC = () => {
 
 
     return (
-        <div className="overflow-scroll w-100 pe-3 m-0 h-100
-        row row-cols-2 row-cols-sm-3 row-cols-md-2 row-cols-lg-3
+        <div className="overflow-scroll w-100 pe-3 m-0
+        row row-cols-2 row-cols-sm-3 row-cols-lg-3
         row-cols-xl-3 row-cols-xxl-4 rounded-3 overflow-hidden">
             {
                 temp.map((v, i) => (
@@ -149,7 +149,12 @@ const FriendSearchList: React.FC = () => {
                     border-bottom border-right d-flex flex-column align-items-center row-gap-1 rounded-0"
                         style={{ height: 'fit-content', cursor: 'default' }}
                         key={i}>
-                        <div className="bg-primary rounded-circle profile"></div>
+                        <div className="bg-primary rounded-circle profile position-relative
+                        d-flex align-items-center justify-content-center">
+                            <h1 className='position-absolute p-0 m-0 text-white'>
+                                {v.name.split('')[0]}
+                            </h1>
+                        </div>
                         <h6 className="text-body fw-bold m-0 d-flex
                         align-items-center column-gap-1">
                             {v.name}
@@ -157,9 +162,10 @@ const FriendSearchList: React.FC = () => {
                             ${v.online ? `bg-success` : `bg-danger`}`}
                                 style={{ width: '10px', height: '10px' }}></div>
                         </h6>
-                        <small className='p-0 m-0 text-secondary'>@name</small>
-                        <small className="text-center text-secondary w-100"
-                            style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', height: '15px' }}>{v.stMsg}</small>
+                        <small className='p-0 m-0 text-secondary overflow-hidden'
+                        style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', height: '20px' }}>{v.userId}</small>
+                        <small className="text-center text-secondary w-100 overflow-hidden"
+                            style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', height: '20px' }}>{v.stMsg}</small>
                         {
                             friends.includes(v.name) ?
                                 <div className='w-100'>

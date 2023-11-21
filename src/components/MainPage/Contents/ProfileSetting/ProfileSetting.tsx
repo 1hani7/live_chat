@@ -48,7 +48,7 @@ const ProfileSetting:React.FC = () => {
                 style={{ width: '700px', maxWidth: '700px' }}>
                     <div className="d-flex flex-column flex-md-row align-items-center
                     column-gap-md-3 text-center text-md-start border p-3 rounded">
-                        <ProfileThumbnail />
+                        <ProfileThumbnail name={name} />
                         <ProfileNameInfo name={name} initId={initId} />
                     </div>
                     <ProfileMsg message={message} />

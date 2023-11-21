@@ -34,13 +34,12 @@ export default function Profile() {
         <button className="btn px-4 d-flex column-gap-3
         align-items-center" style={{ border: 'none' }}
             onClick={() => nav('/MainPage/ProfileSetting')}>
-            <div className='rounded-circle overflow-hidden bg-white'
+            <div className='rounded-circle overflow-hidden bg-white
+            d-flex align-items-center justify-content-center'
                 style={{
-                    backgroundImage: `url(${Public}/images/basicProfile.png)`,
-                    backgroundSize: `cover`,
-                    backgroundPosition: `center`,
                     width: `50px`, height: `50px`,
                 }}>
+                <h4 className='text-secondary fw-bold m-0 p-0'>{userName.split('')[0]}</h4>
             </div>
             <h6 className='text-white my-1 text-start'>
                 {userName}
