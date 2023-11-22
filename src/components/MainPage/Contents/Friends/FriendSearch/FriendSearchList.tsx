@@ -165,7 +165,7 @@ const FriendSearchList: React.FC = () => {
                         <small className='p-0 m-0 text-secondary overflow-hidden'
                         style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', height: '20px' }}>{v.userId}</small>
                         <small className="text-center text-secondary w-100 overflow-hidden"
-                            style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', height: '20px' }}>{v.stMsg}</small>
+                            style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', height: '20px' }}>{v.stMsg || "상태메세지가 없습니다."}</small>
                         {
                             friends.includes(v.name) ?
                                 <div className='w-100'>

@@ -23,7 +23,9 @@ export default function ExtraMenus() {
                                 });
                             }
                         });
+                        // 세션 스토리지 초기화(보안)
                         window.sessionStorage.setItem('uid', '');
+                        window.sessionStorage.setItem('name', '');
                         nav('/');
                     } catch (err) {
                         console.error('오프라인 전환 에러 : ' + err);

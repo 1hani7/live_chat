@@ -3,6 +3,7 @@ import { getAuth, createUserWithEmailAndPassword,
     signInWithEmailAndPassword, signOut, updatePassword
 } from "firebase/auth";
 import { getFirestore } from 'firebase/firestore';
+import { getDatabase } from "firebase/database";
 
 
 const firebaseConfig = {
@@ -18,9 +19,11 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
+const chatDb = getDatabase();
 
 export {
     db,
+    chatDb,
     firebaseAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,

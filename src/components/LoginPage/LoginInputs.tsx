@@ -29,8 +29,9 @@ const LoginInputs: React.FC = () => {
             try {
                 const userInfo = await signInWithEmailAndPassword(firebaseAuth, email, pw);
                 const uid: string = userInfo.user.uid;
-                window.sessionStorage.setItem('uid', uid);
+                window.sessionStorage.setItem('uid', uid); // 세션스토리지 uid
                 const userId: string = sessionStorage.uid;
+                // 온라인 전환
                 const querySnapshot = await getDocs(collection(db, 'usersDb'));
                 querySnapshot.forEach(async (document) => {
                     // 온라인 전환
@@ -39,6 +40,8 @@ const LoginInputs: React.FC = () => {
                         await updateDoc(userDocRef, {
                             online: true,
                         });
+                        // 세선스토리지 name => 채팅방 개설에 사용
+                        window.sessionStorage.setItem('name', document.data()?.name);
                     }
                 });
 

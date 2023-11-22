@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './accordion.css';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../../../../../firebaseConfig';
 import { collection, getDocs, doc, updateDoc, arrayRemove } from 'firebase/firestore';
 import { useSelector, useDispatch } from 'react-redux';
 import { reFreshToggle } from '../../../../../features/SearchFriendSlice';
+import { chatDb } from '../../../../../firebaseConfig';
+import { ref, set, get } from 'firebase/database';
 
 const FilterList: React.FC = () => {
 
@@ -13,12 +16,13 @@ const FilterList: React.FC = () => {
         name: string,
         online: boolean | null,
         stMsg: string | null,
-        uid: string | null,
+        uid: string,
         userId: string | null,
         friends?: string[],
     }
 
     const userId: string = sessionStorage.uid;
+    const nav = useNavigate();
 
     const [reTemp, setReTemp] = useState<userInfo[]>([]);
     const [temp, setTemp] = useState<userInfo[]>([]);
@@ -125,6 +129,46 @@ const FilterList: React.FC = () => {
         }
     }
 
+    // 채팅방 개설
+    const createChatRoom = (e:any) => {
+        const db = chatDb;
+        const t = e.target.value;
+        const id = e.target.id;
+        const n = window.sessionStorage.getItem('name');
+        const chatRoomRef = ref(db, 'chatRoom/' + userId + '&' + t);
+        const chatRoomRefRev = ref(db, 'chatRoom/' + t + '&' + userId);
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDay();
+        const hour = date.getHours();
+        const min = date.getMinutes();
+
+        get(ref(db, 'chatRoom/' + userId + '&' + t)).then((snapshot) => {
+            if (!snapshot.exists()) {
+                // 데이터가 존재하지 않으면 추가
+                set(ref(db, 'chatRoom/' + userId + '&' + t), {
+                    players: [n, id],
+                    uid: [userId, t],
+                    createDay: `${year} ${month} ${day} `,
+                    createTime: `${hour}${min}`,
+                    chats: [
+                        {
+                            contents: `${n}님이 채팅방을 개설하셨습니다.`,
+                            user: 'alert',
+                            day: `${year}${month}${day} ${hour}:${min}`,
+                        },
+                    ],
+                });
+    
+                if (window.confirm('채팅방 개설이 완료되었습니다.\n바로 채팅으로 가시겠습니까?')) {
+                    nav('/MainPage/Chat');
+                }
+            }
+        });
+    }
+
+
     return (
         <div className="d-flex flex-column">
             {
@@ -160,7 +204,8 @@ const FilterList: React.FC = () => {
                             <div id={`collapse-${i}`} className="accordion-collapse collapse"
                                 data-bs-parent={`accordionParent-${i}`}>
                                 <div className='accordion-body btn-group w-100 rows'>
-                                    <button className="btn btn-primary col-9">1:1 채팅하기</button>
+                                    <button className="btn btn-primary col-9"
+                                    value={v.uid} id={v.name} onClick={createChatRoom}>채팅방 만들기</button>
                                     <button className="btn btn-outline-danger" value={v.name}
                                         onClick={deleteFriend}>삭제</button>
                                 </div>
@@ -172,5 +217,7 @@ const FilterList: React.FC = () => {
         </div>
     );
 }
+
+
 
 export default FilterList;
