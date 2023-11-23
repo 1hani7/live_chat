@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProfileThumbnail from "./ProfileThumbnail";
 import ProfileMsg from "./ProfileMsg";
 import ProfileNameInfo from "./ProfileNameInfo";
-import ProfileName from "./ProfileName";
+// import ProfileName from "./ProfileName";
 // import ProfilePassword from "./ProfilePassword";
 import ProfileDel from "./ProfileDel"
 
@@ -52,7 +52,7 @@ const ProfileSetting:React.FC = () => {
                         <ProfileNameInfo name={name} initId={initId} />
                     </div>
                     <ProfileMsg message={message} />
-                    <ProfileName name={name} />
+                    {/* <ProfileName name={name} /> */}
                     {/* <ProfilePassword /> */}
                     <ProfileDel />
                 </div>
