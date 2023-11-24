@@ -140,8 +140,8 @@ const FriendSearchList: React.FC = () => {
 
 
     return (
-        <div className="overflow-scroll w-100 pe-3 m-0
-        row row-cols-2 row-cols-sm-3 row-cols-lg-3
+        <div className="overflow-scroll w-100 h-100 pe-0 pe-sm-3 m-0
+        row row-cols-2 row-cols-xs-2 row-cols-sm-3 row-cols-lg-3
         row-cols-xl-3 row-cols-xxl-4 rounded-3 overflow-hidden">
             {
                 temp.map((v, i) => (

@@ -4,7 +4,7 @@ import FriendList from "./FriendList";
 import FriendSearch from "./FriendSearch";
 export default function Friends() {
     return (
-        <div className="container-fluid h-100 bg-white px-5 py-4
+        <div className="container-fluid h-100 bg-white px-2 py-3 px-sm-5 py-sm-4
         d-flex row-xl">
             <div className="col col-md-4 position-relative me-md-2">
                 <div className="d-block d-md-none position-absolute end-0 btn-group">
